@@ -2,12 +2,25 @@ from fastapi import FastAPI
 import joblib
 from pathlib import Path
 from pydantic import BaseModel
-import pandas as pd
+import pandas as pd 
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="NER Landslide Risk Monitoring API",
     description="AI-based early warning and landslide risk monitoring system",
     version="1.0.0"
+)
+
+# Allow frontend to communicate with backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Get the project root directory
